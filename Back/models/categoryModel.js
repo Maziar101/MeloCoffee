@@ -6,6 +6,9 @@ const categorySchema = new mongoose.Schema({
         required:[true,"Please Provide a Category Name"],
         unique:true,
     },
+    sub:{
+        type:Array,
+    }
 });
 
 const Categories = mongoose.model("Categories",categorySchema);

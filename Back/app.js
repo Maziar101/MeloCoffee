@@ -15,11 +15,11 @@ app.use(morgan("dev"));
 
 // Routes
 
-app.get("/api/auth", authRoutes);
-app.get("/api/products", productRoutes);
-app.get("/api/sliders", sliderRoutes);
-app.get("/api/categories", categoryRoutes);
-app.get("*", (req, res) => {
+app.use("/api/auth", authRoutes);
+app.use("/api/products", productRoutes);
+app.use("/api/sliders", sliderRoutes);
+app.use("/api/categories", categoryRoutes);
+app.use("*", (req, res) => {
   res.status(404).json({
     message: "Api Address Not Found",
   });

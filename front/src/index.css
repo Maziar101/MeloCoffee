@@ -8,7 +8,10 @@
   font-family: "iran";
   font-weight: 700;
   font-style: normal;
-  src: url("../../Font/IRANYekanBold.ttf");
+  src: url("../../Font/IRANYekanXFaNum-Bold.woff");
+}
+body{
+  height: 1000px;
 }
 * {
   margin: 0;
@@ -17,4 +20,22 @@
   list-style: none !important;
   text-decoration: none !important;
   font-family: "iran" !important;
+}
+::-webkit-scrollbar{
+  width: 8px;
+  
+}
+::-webkit-scrollbar-track{
+  background-color: white;
+}
+::-webkit-scrollbar-thumb{
+  background-color: #412A22;
+
+}
+.opacity-transition {
+  transition: opacity 0.3s ease-in-out; /* اعمال انیمیشن به opacity */
+}
+
+.opacity-transition:hover {
+  opacity: 1; /* تنظیم opacity به 1 هنگامی که هاور شده است */
 }
