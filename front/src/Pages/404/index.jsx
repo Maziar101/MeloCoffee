@@ -4,7 +4,7 @@ import React from "react";
 
 export default function PageNotFound() {
   return (
-    <Stack>
+    <Stack padding={"50px"}>
       <Stack sx={{ position: "relative" }}>
         <Typography
           sx={{

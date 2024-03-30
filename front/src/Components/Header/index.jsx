@@ -13,7 +13,7 @@ import InstagramIcon from "@mui/icons-material/Instagram";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import { Link } from "react-router-dom";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
-import HeaderLogo from "../../assets/logo-png.png";
+import HeaderLogo from "../../assets/logo-png.png"; 
 import KeyboardArrowLeftIcon from "@mui/icons-material/KeyboardArrowLeft";
 import SearchIcon from "@mui/icons-material/Search";
 import ShoppingBagOutlinedIcon from "@mui/icons-material/ShoppingBagOutlined";
@@ -33,18 +33,8 @@ export default function Header() {
   const [showCatMobile, setShowCatMobile] = useState(false);
   const [iconColor, setIconColor] = useState("#242424"); // رنگ آیکون اصلی
   const [arrowIconColor, setArrowIconColor] = useState("#242424");
-  const [showMobileMenu, setShowMobileMenu] = useState();
   const [showCat, setShowCat] = useState();
   const [iconStates, setIconStates] = useState(
-    Array(category?.length).fill(false)
-  );
-  const handleSubMenuActivation = (index) => {
-    const newSubMenuStates = Array(category?.length).fill(false); // غیرفعال کردن همه زیرمنوها
-    newSubMenuStates[index] = true; // فعال کردن زیرمنوی موردنظر
-    setShowSubMenus(newSubMenuStates);
-  };
-
-  const [subMenuStates, setSubMenuStates] = useState(
     Array(category?.length).fill(false)
   );
 
@@ -61,12 +51,6 @@ export default function Header() {
       setCategory(data?.data?.categories);
     })();
   }, []);
-  const handleSubMenuClick = (index) => {
-    const newSubMenuStates = [...subMenuStates];
-    newSubMenuStates[index] = !newSubMenuStates[index];
-    setSubMenuStates(newSubMenuStates);
-  };
-
   const handleIconClick = (index) => {
     const newIconStates = [...iconStates];
     newIconStates[index] = !newIconStates[index];
@@ -245,6 +229,7 @@ export default function Header() {
           </Stack>
           {/* middle of Header Top Desktop*/}
           <Stack
+            onMouseOver={()=>setShowCat(false)}
             sx={{
               height: "105px",
               justifyContent: "center",
@@ -280,13 +265,13 @@ export default function Header() {
                 </Link>
                 <Typography color={"black"} variant={"span"}>
                   <Link>
-                    <SearchIcon sx={{color:"#000"}} />
+                    <SearchIcon sx={{ color: "#000" }} />
                   </Link>
                 </Typography>
 
                 <Typography color={"#000"} sx={{ position: "relative" }}>
                   <Link>
-                    <ShoppingCartOutlinedIcon sx={{color:"#000"}} />
+                    <ShoppingCartOutlinedIcon sx={{ color: "#000" }} />
                   </Link>
                   <Typography
                     variant="span"
@@ -349,6 +334,7 @@ export default function Header() {
                   alignItems={"center"}
                   component={"li"}
                   onMouseOver={() => handleMouseOver(index)}
+                  
                 >
                   {e?.name}
                   <KeyboardArrowDownIcon sx={{ color: "#DBDBDB" }} />
@@ -361,7 +347,7 @@ export default function Header() {
                       position: "absolute",
                       height: "auto",
                       width: "200px",
-                      zIndex: "5",
+                      zIndex: "8",
                       top: "40px",
                       padding: "20px",
                       gap: "14px",
@@ -587,7 +573,13 @@ export default function Header() {
                   filter: "blur(11px) !important",
                   zIndex: "2",
                   position: "fixed",
-                  top: "0",
+                  top: {
+                    md: "10px",
+                    sm: "50px",
+                    xs: "100px",
+                    lg: "100px",
+                    xl: "1000px",
+                  },
                 }
               : {}
           }
