@@ -229,7 +229,6 @@ export default function Header() {
           </Stack>
           {/* middle of Header Top Desktop*/}
           <Stack
-            onMouseOver={()=>setShowCat(false)}
             sx={{
               height: "105px",
               justifyContent: "center",
