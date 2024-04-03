@@ -6,6 +6,7 @@ import Home from "./Pages/Home";
 import ProductCategory from "./Pages/Product-Category";
 import LoginRegisterPage from "./Pages/LoginRegisterPage";
 import PageNotFound from "./Pages/404";
+import ProductDetails from "./Pages/Product-Details";
 
 export default function App() {
   return (
@@ -15,6 +16,7 @@ export default function App() {
         <Route exact path="/" element={<Home />} />
         <Route path="/product-category" element={<ProductCategory />} />
         <Route path="/login-register" element={<LoginRegisterPage />} />
+        <Route path="/product-details/:id/:name" element={<ProductDetails/>} />
         <Route path="*" element={<PageNotFound />} />
       </Routes>
       <Footer />

@@ -11,7 +11,7 @@ const productSchema = mongoose.Schema({
         unique:true,
     },
     price:{
-        type:String,
+        type:Number,
         required:[true,"Please A Price For Product"],
     },
     description:{
@@ -30,7 +30,7 @@ const productSchema = mongoose.Schema({
         type:Array,
         required:[true,"Please Set relatedProductsId For Product"],
     }
-});
+},{timestamps:true});
 
 const Products = mongoose.model("Products",productSchema);
 export default Products;

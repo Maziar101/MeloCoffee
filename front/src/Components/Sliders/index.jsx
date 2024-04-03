@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import fetchapi from "../../utils/FetchApi";
 import { Swiper, SwiperSlide } from "swiper/react";
-import { Autoplay } from "swiper/modules";
+import { Autoplay, Pagination } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/navigation";
 import { Box } from "@mui/material";
@@ -26,7 +26,8 @@ export default function Sliders() {
     <>
       <Box width={"100%"} marginTop={"50px"}>
         <Swiper
-          modules={[Autoplay]}
+         
+         modules={[Autoplay]}
           slideToClickedSlide={true}
           loop={true}
           loopFillGroupWithBlank={true}
@@ -35,7 +36,6 @@ export default function Sliders() {
             disableOnInteraction: false,
             reverseDirection: true,
           }}
-          
         >
           {slides}
         </Swiper>
@@ -43,3 +43,4 @@ export default function Sliders() {
     </>
   );
 }
+

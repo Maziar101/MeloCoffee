@@ -13,7 +13,7 @@ import InstagramIcon from "@mui/icons-material/Instagram";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import { Link } from "react-router-dom";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
-import HeaderLogo from "../../assets/logo-png.png"; 
+import HeaderLogo from "../../assets/logo-png.png";
 import KeyboardArrowLeftIcon from "@mui/icons-material/KeyboardArrowLeft";
 import SearchIcon from "@mui/icons-material/Search";
 import ShoppingBagOutlinedIcon from "@mui/icons-material/ShoppingBagOutlined";
@@ -314,7 +314,7 @@ export default function Header() {
               m={"auto"}
               component={"ul"}
               sx={{
-                gap: "20px",
+                gap: "30px",
                 flexDirection: "row",
                 marginTop: "10px",
                 position: "relative",
@@ -332,31 +332,8 @@ export default function Header() {
                   sx={{ cursor: "pointer" }}
                   alignItems={"center"}
                   component={"li"}
-                  onMouseOver={() => handleMouseOver(index)}
-                  
                 >
                   {e?.name}
-                  <KeyboardArrowDownIcon sx={{ color: "#DBDBDB" }} />
-                  <Stack
-                    className="opacity-transition"
-                    sx={{
-                      display: showSubMenus[index] ? "flex" : "none",
-                      background: "#fff",
-                      borderRadius: "13px",
-                      position: "absolute",
-                      height: "auto",
-                      width: "200px",
-                      zIndex: "8",
-                      top: "40px",
-                      padding: "20px",
-                      gap: "14px",
-                    }}
-                    onMouseOut={() => handleMouseOut(index)}
-                  >
-                    {e?.sub?.map((e) => (
-                      <Typography sx={{ color: "#848484" }}>{e}</Typography>
-                    ))}
-                  </Stack>
                 </Typography>
               ))}
             </Stack>
@@ -425,7 +402,6 @@ export default function Header() {
           </Stack>
         </AppBar>
         <Stack
-          onBlur={() => setShowCatMobile(false)}
           sx={{
             position: "fixed",
             top: "0",
@@ -480,6 +456,7 @@ export default function Header() {
                     color={"black"}
                     display={"flex"}
                     flexDirection={"row"}
+                    padding={"17px 0px 17px 0px"}
                     sx={{
                       cursor: "pointer",
                       borderBottom: "1px solid rgba(0,0,0,0.105)",
@@ -489,37 +466,8 @@ export default function Header() {
                     alignItems={"center"}
                     component={"li"}
                   >
-                    <Stack>{e?.name}</Stack>
-                    <Stack
-                      id={`iconParent${index}`}
-                      sx={{
-                        width: "50px",
-                        display: "flex",
-                        justifyContent: "center",
-                        alignItems: "center",
-                        height: "50px",
-                        transition: "background-color 0.3s",
-                        borderRight: "1px solid rgba(0,0,0,0.105)",
-                        borderBottom: "1px solid rgba(0,0,0,0.105)",
-                      }}
-                    >
-                      {iconStates[index] ? (
-                        <KeyboardArrowUpIcon
-                          onClick={() => handleIconClick(index)}
-                          sx={{
-                            color: arrowIconColor, // استفاده از arrowIconColor به عنوان رنگ آیکون پیکان
-                            fontSize: "30px",
-                          }}
-                        />
-                      ) : (
-                        <KeyboardArrowLeftIcon
-                          onClick={() => handleIconClick(index)}
-                          sx={{
-                            color: arrowIconColor, // استفاده از arrowIconColor به عنوان رنگ آیکون پیکان
-                            fontSize: "30px",
-                          }}
-                        />
-                      )}
+                    <Stack>
+                      <Link style={{color:"black"}}>{e?.name}</Link>
                     </Stack>
                   </Typography>
                   <Stack
