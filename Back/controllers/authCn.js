@@ -47,12 +47,14 @@ export const Login = async (req, res, next) => {
     );
     const { hashPass, ...otherUsers } = user._doc;
     res.status(200).json({
+      status: "success",
       message: "Login Successfully",
       token,
       user: otherUsers,
     });
   } catch (err) {
     res.status(400).json({
+        status: "error",
         message:"Error Occurred While Logging in",
     });
   }

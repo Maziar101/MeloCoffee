@@ -29,7 +29,7 @@ export default function Footer() {
 
   return (
     <>
-      <Stack component={"footer"} sx={{ padding: "10px" , marginTop:"50px" , height:"800px" , marginBottom:"100px"}}>
+      <Stack component={"footer"} sx={{  height:"800px" , marginBottom:"100px"}}>
         <Stack sx={{ width: {xl:"85%" , lg:"90%" , md:"100%" , xs:"100%"}, margin: "auto", textAlign: "center" }}>
           <Stack
             sx={{ flexDirection: "row", gap: {xl:"20px" , lg:"20px" , md:"20px" , xs:"0px"}, justifyContent: "center" }}

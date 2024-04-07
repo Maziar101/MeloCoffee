@@ -6,6 +6,7 @@ import "swiper/css";
 import '@splidejs/react-splide/css';
 import '@splidejs/react-splide/css/skyblue';
 import '@splidejs/react-splide/css/sea-green';
+import 'react-toastify/dist/ReactToastify.css';
 import '@splidejs/react-splide/css/core';
 import reportWebVitals from "./reportWebVitals";
 import { Provider } from "react-redux";
