@@ -11,11 +11,8 @@ import {
 import React, { useEffect, useState } from "react";
 import colors from "../../utils/colors";
 import InstagramIcon from "@mui/icons-material/Instagram";
-import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import { Link } from "react-router-dom";
-import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import HeaderLogo from "../../assets/logo-png.png";
-import KeyboardArrowLeftIcon from "@mui/icons-material/KeyboardArrowLeft";
 import SearchIcon from "@mui/icons-material/Search";
 import ShoppingBagOutlinedIcon from "@mui/icons-material/ShoppingBagOutlined";
 import MenuIcon from "@mui/icons-material/Menu";
@@ -24,7 +21,7 @@ import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
 import fetchapi from "../../utils/FetchApi";
 import { logout } from "../../store/Slices/TokenSlice";
 
-export default function Header({userToken}) {
+export default function Header({ userToken }) {
   const { token } = useSelector((state) => state.token);
   const { list } = useSelector((state) => state.cart);
   const dispatch = useDispatch();
@@ -34,22 +31,16 @@ export default function Header({userToken}) {
     Array(category?.length).fill(false)
   );
   const [showCatMobile, setShowCatMobile] = useState(false);
-  const [iconColor, setIconColor] = useState("#242424"); // رنگ آیکون اصلی
-  const [arrowIconColor, setArrowIconColor] = useState("#242424");
   const [showCat, setShowCat] = useState();
   const user = useSelector((state) => state.token.user);
   const [openAccount, setOpenAccount] = useState(false);
-  const [iconStates, setIconStates] = useState(
-    Array(category?.length).fill(false)
-  );
-    const handleOut = ()=>{
-      window.localStorage.removeItem("user");
-      window.localStorage.removeItem("token");
-      setOpenAccount(false);
-      dispatch(logout());
-      window.location.reload();
-    };
-  const [hoveredIndex, setHoveredIndex] = useState(null); // اضافه کردن متغیر برای ذخیره شاخصی که هاور شده است
+  const handleOut = () => {
+    window.localStorage.removeItem("user");
+    window.localStorage.removeItem("token");
+    setOpenAccount(false);
+    dispatch(logout());
+    window.location.reload();
+  };
   const [linkColors, setLinkColors] = useState(
     Array(First?.length).fill("#fff")
   );
@@ -62,25 +53,6 @@ export default function Header({userToken}) {
       setCategory(data?.data?.categories);
     })();
   }, []);
-  const handleIconClick = (index) => {
-    const newIconStates = [...iconStates];
-    newIconStates[index] = !newIconStates[index];
-    setIconStates(newIconStates);
-
-    // تغییر بک‌گراند آیکون به رنگ قهوه‌ای
-    const iconParent = document.getElementById(`iconParent${index}`);
-    if (iconParent) {
-      if (newIconStates[index]) {
-        iconParent.style.backgroundColor = "#412A22"; // تنظیم بک‌گراند به رنگ قهوه‌ای
-        setIconColor("white"); // تغییر رنگ آیکون به سفید
-        setArrowIconColor("white"); // تغییر رنگ آیکون پیکان به سفید
-      } else {
-        iconParent.style.backgroundColor = "transparent"; // بازگشت به حالت اولیه
-        setIconColor("#242424"); // بازگشت به رنگ اولیه آیکون
-        setArrowIconColor("#242424"); // بازگشت به رنگ اولیه آیکون پیکان
-      }
-    }
-  };
 
   const handleMouseOver = (index) => {
     setShowCat(true);
@@ -90,7 +62,6 @@ export default function Header({userToken}) {
     newShowSubMenus[index] = true;
     setShowSubMenus(newShowSubMenus);
 
-    setHoveredIndex(index); // تنظیم شاخص هاور شده
     const updatedColors = [...linkColors];
     updatedColors[index] = "rgba(255,255,255,0.8)";
     setLinkColors(updatedColors);
@@ -98,7 +69,6 @@ export default function Header({userToken}) {
 
   const handleMouseOut = (index) => {
     setShowCat(false);
-    setHoveredIndex(null); // حذف شاخص هاور شده
     const updatedColors = [...linkColors];
     updatedColors[index] = "#fff";
     setLinkColors(updatedColors);
@@ -497,40 +467,32 @@ export default function Header({userToken}) {
                     <Link style={{ color: "black" }}>{e?.name}</Link>
                   </Stack>
                 </Typography>
-                <Stack
-                  key={index}
-                  fontSize={13.5}
-                  fontWeight={"700"}
-                  color={"black"}
-                  display={"flex"}
-                  sx={{
-                    cursor: "pointer",
-                    borderBottom: "1px solid rgba(0,0,0,0.105)",
-                  }}
-                  width={"240px"}
-                  alignItems={"center"}
-                  component={"ul"}
-                  style={{ display: iconStates[index] ? "block" : "none" }} // تغییر در نمایش بر اساس وضعیت آیکون
-                >
-                  {e?.sub?.map((sub, index) => (
-                    <Stack
-                      width={"240px"}
-                      sx={{
-                        borderBottom: "1px solid rgba(0,0,0,0.105)",
-                        display: "flex",
-                        justifyContent: "right",
-                        padding: "15px 0px 15px 0px",
-                        color: "#848484",
-                        fontWeight: "400",
-                      }}
-                      component={"li"}
-                    >
-                      {sub}
-                    </Stack>
-                  ))}
-                </Stack>
               </>
             ))}
+          </Stack>
+          <Stack flexDirection={"row"} alignItems={"center"}>
+            {token ? (
+              <Link
+                style={{ color: "#000", fontWeight: "700", padding: "10px" , fontSize:"15px"}}
+                onClick={handleOpenAccount}
+              >
+                سلام {user?.name} عزیز
+              </Link>
+            ) : (
+              <Link
+                to={"/login-register"}
+                style={{ color: "#000", fontWeight: "700" , fontSize:"15px"}}
+              >
+                ورود / ثبت نام
+              </Link>
+            )}
+            {openAccount && (
+              <Box>
+                <Button variant="outlined" sx={{width:"120px",height:"40px",fontSize:"14px"}} color="error" onClick={handleOut}>
+                  خروج از حساب
+                </Button>
+              </Box>
+            )}
           </Stack>
         </Stack>
       </Stack>

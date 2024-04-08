@@ -15,11 +15,14 @@ import { login } from "./store/Slices/TokenSlice";
 
 export default function App() {
   const dispatch = useDispatch();
-  const [loader, setLoader] = useState();
+  const [loader, setLoader] = useState(false);
   const [userToken,setUserToken] = useState(null);
   const theme = createMuiTheme({
     direction: "rtl", // Both here and <body dir="rtl">
   });
+  setTimeout(()=>{
+    setLoader(true);
+  },2000);
   useEffect(() => {
     (async () => {
       const token = JSON.parse(window.localStorage.getItem("token"));
@@ -29,8 +32,6 @@ export default function App() {
         console.log(token)
         dispatch(login({token:token,user:user}));
       }
-      const isLoading = fetchapi(process.env.REACT_APP_BASE_API + "products");
-      setLoader(isLoading);
     })();
   }, []);
   return (
