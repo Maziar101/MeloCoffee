@@ -25,9 +25,20 @@ const ShoppingSlice = createSlice({
         state.list.push({ ...action.payload, quantity: 1 });
       }
     },
+    decreaseQuantity: (state, action) => {
+      const existingItemIndex = state.list.findIndex(
+        (item) => item._id === action.payload.productId
+      );
+
+      if (existingItemIndex !== -1) {
+        if (state.list[existingItemIndex].quantity > 1) {
+          state.list[existingItemIndex].quantity--;
+        }
+      }
+    },
   },
 });
 
-export const { removeAll, removeItem, addItem } = ShoppingSlice.actions;
+export const { removeAll, removeItem, addItem,decreaseQuantity } = ShoppingSlice.actions;
 export const selectCartItemCount = (state) => state.cart.list.length;
 export default ShoppingSlice.reducer;

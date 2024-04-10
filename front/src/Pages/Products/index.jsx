@@ -98,7 +98,7 @@ export default function Products() {
       sx={{
         border: "1px solid #ddd",
         width: "210px",
-        height: product?.isAvailable ? "390px" : "390px",
+        height: "360px",
         borderRadius: "15px",
         padding: "10px",
         textAlign: "center",
@@ -144,7 +144,7 @@ export default function Products() {
             <Typography
               position="absolute"
               sx={{
-                bottom: "60px",
+                bottom: "20px",
                 textAlign: "center",
               }}
             >
@@ -152,21 +152,6 @@ export default function Products() {
             </Typography>
           </Stack>
 
-          <CustomButton
-            variant="contained"
-            sx={{
-              background: "#D3A97F",
-              width: "155px",
-              margin: "auto",
-              borderRadius: "20px",
-              color: "#000",
-              position: "absolute",
-              bottom: "10px",
-              right: "25px",
-            }}
-          >
-            افزودن به سبد خرید
-          </CustomButton>
         </>
       ) : (
         <Stack sx={{ gap: "10px" }}>
