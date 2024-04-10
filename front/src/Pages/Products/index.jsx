@@ -24,9 +24,6 @@ export default function Products() {
   const [show404, setShow404] = useState(false);
   const [showDelFilBtn, setShowDelFilBtn] = useState(false);
   const [filter, setFilter] = useState(null);
-  const [productUrl, setProductUrl] = useState(
-    `products?categoryId=${categoryId}`
-  );
   const [availableCheck, setAvailableChecked] = useState(false);
   const CustomButton = styled(Button)({
     "&:hover": {
@@ -39,53 +36,76 @@ export default function Products() {
       background: "#E0E0E0",
     },
   });
+
+  // ذخیره آخرین categoryId و productUrl
+  const [lastCategoryId, setLastCategoryId] = useState(categoryId);
+  const [lastProductUrl, setLastProductUrl] = useState(
+    `products?categoryId=${categoryId}`
+  );
+
+  useEffect(() => {
+    // اگر categoryId تغییر کرده است، productUrl را به روز کنید
+    if (categoryId !== lastCategoryId) {
+      setLastProductUrl(`products?categoryId=${categoryId}`);
+      setLastCategoryId(categoryId);
+    }
+  }, [categoryId, lastCategoryId]);
+
   useEffect(() => {
     (async () => {
-      if (categoryId?.slice(0, 2) == "66") {
-        const res = await fetchapi(process.env.REACT_APP_BASE_API + productUrl);
+      try {
+        const res = await fetchapi(
+          process.env.REACT_APP_BASE_API + lastProductUrl
+        );
         setProducts(res?.data);
         setShow404(false);
-      } else {
+      } catch (error) {
+        console.error("Error fetching products:", error);
         setShow404(true);
       }
     })();
-  }, [productUrl, categoryId]);
+  }, [lastProductUrl]);
 
   const handleChangeFilter = (e) => {
     const selectedFilter = e.target.value;
     setFilter(selectedFilter);
-    if (e.target.value == "new") {
-      setProductUrl(`products/last?categoryId=${categoryId}`);
-    } else if (e.target.value == "like") {
-      setProductUrl(`products?categoryId=${categoryId}`);
+    if (e.target.value === "new") {
+      setLastProductUrl(`products/last?categoryId=${categoryId}`);
+    } else if (e.target.value === "like") {
+      setLastProductUrl(`products?categoryId=${categoryId}`);
     }
   };
+
   const handleAvailable = () => {
     setAvailableChecked(!availableCheck);
   };
+
   const handleAvailableFilter = () => {
     if (availableCheck) {
-      setProductUrl(productUrl + "&isAvailable=true");
+      setLastProductUrl(lastProductUrl + "&isAvailable=true");
       setShowDelFilBtn(true);
     }
   };
+
   const handleDeleteFilter = () => {
-    setProductUrl(`products?categoryId=${categoryId}`);
+    setLastProductUrl(`products?categoryId=${categoryId}`);
     setShowDelFilBtn(false);
   };
+
   const productsList = products?.map((product) => (
-    <>
-      <Stack
-        sx={{
-          border: "1px solid #ddd",
-          width: "210px",
-          height: product?.isAvailable ? "350px" : "auto",
-          borderRadius: "15px",
-          padding: "10px",
-          textAlign: "center",
-          position: "relative",
-        }}
-      >
+    <Stack
+      key={product?._id}
+      sx={{
+        border: "1px solid #ddd",
+        width: "210px",
+        height: product?.isAvailable ? "390px" : "390px",
+        borderRadius: "15px",
+        padding: "10px",
+        textAlign: "center",
+        position: "relative",
+      }}
+    >
+      <Link to={`/product-details/${product?._id}/${product?.name?.split(" ")?.join("-")}`}>
         <img
           src={product?.image}
           style={{
@@ -94,31 +114,69 @@ export default function Products() {
             margin: "0 auto",
             borderRadius: "15px",
           }}
+          alt={product?.name}
         />
-        <Typography
-          sx={{
-            fontSize: "14px",
-            width: "90%",
-            margin: "auto",
-            mt: "10px",
-            mb: "10px",
-          }}
-        >
-          {product?.name}
-        </Typography>
-        {product?.isAvailable ? (
-          <>
-            <Stack
+      </Link>
+
+      <Typography
+        sx={{
+          fontSize: "14px",
+          width: "90%",
+          margin: "auto",
+          mt: "10px",
+          mb: "10px",
+        }}
+      >
+        {product?.name}
+      </Typography>
+      {product?.isAvailable ? (
+        <>
+          <Stack
+            sx={{
+              flexDirection: "row",
+              alignItems: "center",
+              justifyContent: "center",
+              gap: "4px",
+            }}
+          >
+            <CheckIcon />
+            <Typography>موجود در انبار</Typography>{" "}
+            <Typography
+              position="absolute"
               sx={{
-                flexDirection: "row",
-                alignItems: "center",
-                justifyContent: "center",
-                gap: "4px",
+                bottom: "60px",
+                textAlign: "center",
               }}
             >
-              <CheckIcon />
-              <Typography>موجود در انبار</Typography>
-            </Stack>
+              {product?.price} تومان
+            </Typography>
+          </Stack>
+
+          <CustomButton
+            variant="contained"
+            sx={{
+              background: "#D3A97F",
+              width: "155px",
+              margin: "auto",
+              borderRadius: "20px",
+              color: "#000",
+              position: "absolute",
+              bottom: "10px",
+              right: "25px",
+            }}
+          >
+            افزودن به سبد خرید
+          </CustomButton>
+        </>
+      ) : (
+        <Stack sx={{ gap: "10px" }}>
+          <Typography sx={{ color: "#C13030" }}>اتمام موجودی</Typography>
+          <Typography sx={{ mb: "40px" }}>بزودی</Typography>
+          <Link
+            to={`/product-details/${product?._id}/${product?.name
+              ?.split(" ")
+              ?.join("-")}`}
+          >
             <CustomButton
               variant="contained"
               sx={{
@@ -132,42 +190,18 @@ export default function Products() {
                 right: "25px",
               }}
             >
-              افزودن به سبد خرید
+              جزئیات محصول
             </CustomButton>
-          </>
-        ) : (
-          <Stack sx={{ gap: "10px" }}>
-            <Typography sx={{ color: "#C13030" }}>اتمام موجودی</Typography>
-            <Typography sx={{ mb: "40px" }}>بزودی</Typography>
-            <Link
-              to={`/product-details/${product?._id}/${product?.name
-                ?.split(" ")
-                ?.join("-")}`}
-            >
-              <CustomButton
-                variant="contained"
-                sx={{
-                  background: "#D3A97F",
-                  width: "155px",
-                  margin: "auto",
-                  borderRadius: "20px",
-                  color: "#000",
-                  position: "absolute",
-                  bottom: "10px",
-                  right: "25px",
-                }}
-              >
-                جزئیات محصول
-              </CustomButton>
-            </Link>
-          </Stack>
-        )}
-      </Stack>
-    </>
+          </Link>
+        </Stack>
+      )}
+    </Stack>
   ));
-  console.log(products);
+
   return show404 ? (
     <PageNotFound />
+  ) : !products ? (
+    <Typography>محصولی پیدا نشد</Typography>
   ) : (
     <>
       <Stack
@@ -238,7 +272,7 @@ export default function Products() {
               />
             </Stack>
           </Stack>
-          <Stack sx={{ width: "90%" , margin:"auto"}}>
+          <Stack sx={{ width: "90%", margin: "auto" }}>
             <Stack
               sx={{ flexDirection: "row", justifyContent: "space-between" }}
             >
@@ -247,11 +281,13 @@ export default function Products() {
                   color: "#242424",
                   fontSize: "11px",
                   fontWeight: "700",
-                  mr: {xl: "40px",
-                  lg: "50px",
-                  md: "70px",
-                  sm: "50px",
-                  xs: "10px",},
+                  mr: {
+                    xl: "40px",
+                    lg: "50px",
+                    md: "70px",
+                    sm: "50px",
+                    xs: "10px",
+                  },
                 }}
               >
                 فروشگاه اینترنتی » {categoryName.split("-").join(" ")}
@@ -290,7 +326,11 @@ export default function Products() {
                 margin: "50px auto",
               }}
             >
-              {products ? productsList : <img src={Loadergif} />}
+              {productsList.length !== 0 ? (
+                productsList
+              ) : (
+                <Typography color={"red"}>محصولی یافت نشد</Typography>
+              )}
             </Box>
           </Stack>
         </Stack>

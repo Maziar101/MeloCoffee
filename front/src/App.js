@@ -3,7 +3,6 @@ import Header from "./Components/Header";
 import { Navigate, Route, Routes } from "react-router-dom";
 import Footer from "./Components/Footer";
 import Home from "./Pages/Home";
-import ProductCategory from "./Pages/Product-Category";
 import LoginRegisterPage from "./Pages/LoginRegisterPage";
 import PageNotFound from "./Pages/404";
 import ProductDetails from "./Pages/Product-Details";
@@ -13,6 +12,7 @@ import { Stack, ThemeProvider, createMuiTheme } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import { login } from "./store/Slices/TokenSlice";
 import Products from "./Pages/Products";
+import Cart from "./Pages/Cart";
 
 export default function App() {
   const dispatch = useDispatch();
@@ -56,7 +56,7 @@ export default function App() {
             <Header userToken={userToken} />
             <Routes>
               <Route exact path="/" element={<Home />} />
-              <Route path="/product-category" element={<ProductCategory />} />
+              <Route path="/cart" element={<Cart/>} />
               <Route
                 path="/login-register"
                 element={

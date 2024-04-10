@@ -81,12 +81,18 @@ export default function Home() {
       onMouseEnter={handleHover}
       onMouseLeave={handleLeave}
     >
-      <img
-        src={coffee.src}
-        width={"270px"}
-        style={{ borderRadius: "15px", transition: "transform 0.3s ease" }}
-        alt={coffee.alt}
-      />
+      <Link
+        to={`/products/6601ad57bb7b1314d4cb97c9/${coffee.alt
+          ?.split(" ")
+          ?.join("-")}`}
+      >
+        <img
+          src={coffee.src}
+          width={"270px"}
+          style={{ borderRadius: "15px", transition: "transform 0.3s ease" }}
+          alt={coffee.alt}
+        />
+      </Link>
     </Box>
   ));
   const damCoffeesCart = damCoffeeImages.map((coffee, index) => (
@@ -105,12 +111,18 @@ export default function Home() {
       onMouseEnter={handleHover}
       onMouseLeave={handleLeave}
     >
-      <img
-        src={coffee.src}
-        width={"270px"}
-        style={{ borderRadius: "15px", transition: "transform 0.3s ease" }}
-        alt={coffee.alt}
-      />
+      <Link
+        to={`/products/660abf6d23641b8a611fb550/${coffee.alt
+          ?.split(" ")
+          ?.join("-")}`}
+      >
+        <img
+          src={coffee.src}
+          width={"270px"}
+          style={{ borderRadius: "15px", transition: "transform 0.3s ease" }}
+          alt={coffee.alt}
+        />
+      </Link>
     </Box>
   ));
   const specialCoffeeMobile = specialCoffees?.map((e) => (
@@ -149,7 +161,11 @@ export default function Home() {
         },
       }}
     >
-      <Link to={`/products/6601ad57bb7b1314d4cb97c9/${e?.desktop?.message?.split(" ")?.join("-")}`}>
+      <Link
+        to={`/products/6601ad57bb7b1314d4cb97c9/${e?.desktop?.message
+          ?.split(" ")
+          ?.join("-")}`}
+      >
         <img
           src={e?.desktop?.image}
           width={"100%"}

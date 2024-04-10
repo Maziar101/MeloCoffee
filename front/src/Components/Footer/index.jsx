@@ -67,7 +67,7 @@ export default function Footer() {
         }}
       >
         <Typography color={"#000"} sx={{ position: "relative" }}>
-          <Link>
+          <Link to={"/cart"}>
             <ShoppingBagOutlinedIcon sx={{ color: "black" }} />
           </Link>
           <Typography
@@ -200,7 +200,7 @@ export default function Footer() {
       >
         <Stack
           sx={{
-            width: { xl: "85%", lg: "90%", md: "100%", xs: "99%" },
+            width: { xl: "85%", lg: "90%", md: "100%", xs: "100%" },
             margin: "auto",
             textAlign: "center",
           }}

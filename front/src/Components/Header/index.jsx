@@ -266,7 +266,7 @@ export default function Header({ userToken }) {
               </Typography>
 
               <Typography color={"#000"} sx={{ position: "relative" }}>
-                <Link>
+                <Link to={"/cart"}>
                   <ShoppingCartOutlinedIcon sx={{ color: "#000" }} />
                 </Link>
                 <Typography
@@ -286,7 +286,7 @@ export default function Header({ userToken }) {
                     alignItems: "center",
                   }}
                 >
-                  {list.length}
+                  {list.length?list.length:0}
                 </Typography>
               </Typography>
             </Stack>
@@ -330,7 +330,7 @@ export default function Header({ userToken }) {
                 alignItems={"center"}
                 component={"li"}
               >
-                {e?.name}
+                <Link style={{color:"#000"}} to={`/products/${e?._id}/${e?.name?.split(" ")?.join("-")}`}>{e?.name}</Link>
               </Typography>
             ))}
           </Stack>
@@ -464,7 +464,14 @@ export default function Header({ userToken }) {
                   component={"li"}
                 >
                   <Stack>
-                    <Link style={{ color: "black" }}>{e?.name}</Link>
+                    <Link
+                      to={`/products/${e?._id}/${e?.name
+                        ?.split(" ")
+                        ?.join("-")}`}
+                      style={{ color: "black" }}
+                    >
+                      {e?.name}
+                    </Link>
                   </Stack>
                 </Typography>
               </>
@@ -473,7 +480,12 @@ export default function Header({ userToken }) {
           <Stack flexDirection={"row"} alignItems={"center"}>
             {token ? (
               <Link
-                style={{ color: "#000", fontWeight: "700", padding: "10px" , fontSize:"15px"}}
+                style={{
+                  color: "#000",
+                  fontWeight: "700",
+                  padding: "10px",
+                  fontSize: "15px",
+                }}
                 onClick={handleOpenAccount}
               >
                 سلام {user?.name} عزیز
@@ -481,14 +493,19 @@ export default function Header({ userToken }) {
             ) : (
               <Link
                 to={"/login-register"}
-                style={{ color: "#000", fontWeight: "700" , fontSize:"15px"}}
+                style={{ color: "#000", fontWeight: "700", fontSize: "15px" }}
               >
                 ورود / ثبت نام
               </Link>
             )}
             {openAccount && (
               <Box>
-                <Button variant="outlined" sx={{width:"120px",height:"40px",fontSize:"14px"}} color="error" onClick={handleOut}>
+                <Button
+                  variant="outlined"
+                  sx={{ width: "120px", height: "40px", fontSize: "14px" }}
+                  color="error"
+                  onClick={handleOut}
+                >
                   خروج از حساب
                 </Button>
               </Box>
