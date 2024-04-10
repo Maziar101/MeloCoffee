@@ -17,6 +17,7 @@ import mosaferatiImg from "../../assets/mosaferati.jpg";
 import ProductSlider from "../../Components/ProductSlider/index.jsx";
 import Sliders from "../../Components/Sliders/index.jsx";
 import CoffeeAccordion from "../../Components/Accordion/index.jsx";
+import { Link } from "react-router-dom";
 
 export default function Home() {
   const [specialCoffees, setSpecialCoffees] = useState();
@@ -148,25 +149,27 @@ export default function Home() {
         },
       }}
     >
-      <img
-        src={e?.desktop?.image}
-        width={"100%"}
-        style={{ borderRadius: "15px", transition: "transform 0.3s ease" }}
-        alt={e?.desktop?.message}
-      />
-      <Typography
-        className="overlay"
-        sx={{
-          position: "absolute",
-          top: "20px",
-          right: "20px",
-          color: "#fff",
-          fontSize: { lg: "18px", xl: "20px", xxl: "23px" },
-          transition: "transform 0.3s ease",
-        }}
-      >
-        {e?.desktop?.message}
-      </Typography>
+      <Link to={`/products/6601ad57bb7b1314d4cb97c9/${e?.desktop?.message?.split(" ")?.join("-")}`}>
+        <img
+          src={e?.desktop?.image}
+          width={"100%"}
+          style={{ borderRadius: "15px", transition: "transform 0.3s ease" }}
+          alt={e?.desktop?.message}
+        />
+        <Typography
+          className="overlay"
+          sx={{
+            position: "absolute",
+            top: "20px",
+            right: "20px",
+            color: "#fff",
+            fontSize: { lg: "18px", xl: "20px", xxl: "23px" },
+            transition: "transform 0.3s ease",
+          }}
+        >
+          {e?.desktop?.message}
+        </Typography>
+      </Link>
     </Box>
   ));
 

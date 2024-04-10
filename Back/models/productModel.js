@@ -23,7 +23,7 @@ const productSchema = mongoose.Schema({
         required:[true,"Please Set isAvailable For Product"],
     },
     categoryId:{
-        type:Array,
+        type:String,
         required:[true,"Please Set CategoryId For Product"],
     },
     relatedProductsId:{ 

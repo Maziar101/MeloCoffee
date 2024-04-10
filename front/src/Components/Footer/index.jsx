@@ -200,7 +200,7 @@ export default function Footer() {
       >
         <Stack
           sx={{
-            width: { xl: "85%", lg: "90%", md: "100%", xs: "100%" },
+            width: { xl: "85%", lg: "90%", md: "100%", xs: "99%" },
             margin: "auto",
             textAlign: "center",
           }}

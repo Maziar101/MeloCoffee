@@ -12,25 +12,26 @@ import LoaderGif from "../../front/src/assets/loader.gif";
 import { Stack, ThemeProvider, createMuiTheme } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import { login } from "./store/Slices/TokenSlice";
+import Products from "./Pages/Products";
 
 export default function App() {
   const dispatch = useDispatch();
   const [loader, setLoader] = useState(false);
-  const [userToken,setUserToken] = useState(null);
+  const [userToken, setUserToken] = useState(null);
   const theme = createMuiTheme({
     direction: "rtl", // Both here and <body dir="rtl">
   });
-  setTimeout(()=>{
+  setTimeout(() => {
     setLoader(true);
-  },2000);
+  }, 2000);
   useEffect(() => {
     (async () => {
       const token = JSON.parse(window.localStorage.getItem("token"));
       const user = JSON.parse(window.localStorage.getItem("user"));
-      if (token !== null){
+      if (token !== null) {
         setUserToken(token);
-        console.log(token)
-        dispatch(login({token:token,user:user}));
+        console.log(token);
+        dispatch(login({ token: token, user: user }));
       }
     })();
   }, []);
@@ -52,18 +53,21 @@ export default function App() {
       ) : (
         <>
           <ThemeProvider theme={theme}>
-            <Header userToken={userToken}/>
+            <Header userToken={userToken} />
             <Routes>
               <Route exact path="/" element={<Home />} />
               <Route path="/product-category" element={<ProductCategory />} />
               <Route
                 path="/login-register"
-                element={userToken ? <Navigate to={"/"} /> : <LoginRegisterPage />}
+                element={
+                  userToken ? <Navigate to={"/"} /> : <LoginRegisterPage />
+                }
               />
               <Route
                 path="/product-details/:id/:name"
                 element={<ProductDetails />}
               />
+              <Route path="/products/:id/:name" element={<Products/>}/>
               <Route path="*" element={<PageNotFound />} />
             </Routes>
             <Footer />
